@@ -33,6 +33,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.numberChips = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.computerStrategy = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numberChips)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,6 +59,7 @@
             this.whoStarts.Name = "whoStarts";
             this.whoStarts.Size = new System.Drawing.Size(169, 28);
             this.whoStarts.TabIndex = 1;
+            this.whoStarts.Text = "Computer";
             // 
             // label1
             // 
@@ -79,6 +82,11 @@
             // numberChips
             // 
             this.numberChips.Location = new System.Drawing.Point(78, 98);
+            this.numberChips.Minimum = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
             this.numberChips.Name = "numberChips";
             this.numberChips.Size = new System.Drawing.Size(169, 27);
             this.numberChips.TabIndex = 4;
@@ -88,11 +96,34 @@
             0,
             0});
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(78, 246);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(135, 20);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Computer strategy:";
+            // 
+            // computerStrategy
+            // 
+            this.computerStrategy.FormattingEnabled = true;
+            this.computerStrategy.Items.AddRange(new object[] {
+            "Random",
+            "Winning"});
+            this.computerStrategy.Location = new System.Drawing.Point(80, 284);
+            this.computerStrategy.Name = "computerStrategy";
+            this.computerStrategy.Size = new System.Drawing.Size(169, 28);
+            this.computerStrategy.TabIndex = 6;
+            this.computerStrategy.Text = "Random";
+            // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(325, 450);
+            this.Controls.Add(this.computerStrategy);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.numberChips);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -113,5 +144,7 @@
         private Label label1;
         private Label label2;
         private NumericUpDown numberChips;
+        private Label label3;
+        private ComboBox computerStrategy;
     }
 }
