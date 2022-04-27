@@ -7,8 +7,7 @@
         
         //computer always true, human always false
         public List<bool> coinsList = new List<bool>();
-        public enum whoWins {Noneone, Computer, Human, Remis}        
-        
+        public enum WhoWins { Noneone, Computer, Human, Remis }
         public Game(bool isComputerStarts, decimal maxNumberOfChips)
         {
             this.isComputerStarts = isComputerStarts;
@@ -20,11 +19,10 @@
                 addCoin(true, ComputerRandomStrategy.MakeMove(coinsList.Count));
             }
         }
-        public whoWins addCoin(bool isComputerMove, int where)
+        public WhoWins addCoin(bool isComputerMove, int where)
         {
             coinsList.Insert(where, isComputerMove);
             return checkWhoWins();
-
         }
 
         public int getConisListCount()
@@ -32,16 +30,16 @@
             return coinsList.Count;
         }
 
-        public whoWins checkWhoWins()
+        public WhoWins checkWhoWins()
         {
             int coinsCount = getConisListCount();
             if((coinsCount+1)/2 < maxNumberOfChips)
-                return whoWins.Noneone;
+                return WhoWins.Noneone;
             bool computerLose = false;
             bool humanLose = false;
-            for (int step = 1; step < (coinsCount-1)/maxNumberOfChips+1; step++)
+            for (int step = 1; step <= (coinsCount)/maxNumberOfChips+1; step++)
             {
-                for(int firstCountCheck=0; firstCountCheck + step*maxNumberOfChips < coinsCount; firstCountCheck++)
+                for(int firstCountCheck=0; firstCountCheck+1 + step*(maxNumberOfChips-1) <= coinsCount; firstCountCheck++)
                 {
                     bool first = coinsList[firstCountCheck];
                     for(int i=1; i < maxNumberOfChips; i++)
@@ -56,17 +54,12 @@
                     }
                 }
             }
-            if (computerLose && humanLose) return whoWins.Remis;
-            if (computerLose) return whoWins.Human;
-            if(humanLose) return whoWins.Computer;
-            return whoWins.Noneone;
+            if (computerLose && humanLose) return WhoWins.Remis;
+            if (computerLose) return WhoWins.Human;
+            if(humanLose) return WhoWins.Computer;
+            return WhoWins.Noneone;
         }
 
-
-
-
-
-        
 
     }
 }

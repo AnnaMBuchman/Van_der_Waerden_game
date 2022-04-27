@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Van_der_Waerdena_game.Game;
 
 namespace Van_der_Waerdena_game
 {
@@ -58,17 +59,53 @@ namespace Van_der_Waerdena_game
             }
             
         }
-
+        private string winning(WhoWins whoWins)
+        {
+            if (whoWins != WhoWins.Noneone)
+            {
+                if (whoWins == WhoWins.Remis)
+                {
+                    return "REMIS!";
+                }
+                else if (whoWins == WhoWins.Computer)
+                {
+                    return "Computer wins the game!";
+                }
+                else
+                {
+                    return "Human wins the game!";
+                }
+                
+            }
+            return null;
+        }
         private void put_coin_Click(object sender, EventArgs e)
         {
-            game.addCoin(false, (int)this.whare_put_coin.Value);
+            WhoWins whoWins = game.addCoin(false, (int)this.whare_put_coin.Value);
             this.panel1.Invalidate();
             this.panel1.Refresh();
+            string label = winning(whoWins);
+            if (label is not null)
+            {
+                WhowinsForms whowinsForms = new WhowinsForms(label, startForm, this);
+                whowinsForms.Show();
+                return;
+            }
+            this.whare_put_coin.Maximum++;
             Thread.Sleep(1000);
             if(computerStrategy=="Random")
-                game.addCoin(true, ComputerRandomStrategy.MakeMove(game.getConisListCount()));
+                whoWins = game.addCoin(true, ComputerRandomStrategy.MakeMove(game.getConisListCount()));
             this.panel1.Invalidate();
             this.panel1.Refresh();
+            label = winning(whoWins);
+            if (label is not null)
+            {
+                WhowinsForms whowinsForms = new WhowinsForms(label, startForm,this);
+                whowinsForms.Show();
+                return;
+            }
+            this.whare_put_coin.Maximum++;
+            
         }
     }
 }

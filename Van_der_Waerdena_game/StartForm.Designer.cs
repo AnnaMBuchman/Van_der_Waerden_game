@@ -91,7 +91,7 @@
             this.numberChips.Size = new System.Drawing.Size(169, 27);
             this.numberChips.TabIndex = 4;
             this.numberChips.Value = new decimal(new int[] {
-            5,
+            3,
             0,
             0,
             0});
