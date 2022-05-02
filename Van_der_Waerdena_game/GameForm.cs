@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Van_der_Waerdena_game.Game;
 
 namespace Van_der_Waerdena_game
 {
@@ -15,7 +14,7 @@ namespace Van_der_Waerdena_game
     {
         StartForm startForm;
         private readonly Game game;
-        private int radius = 50;
+        private int radius = 30;
         private readonly string computerStrategy;
         public GameForm(StartForm startForm, Game game, string computerStrategy)
         {
@@ -41,33 +40,33 @@ namespace Van_der_Waerdena_game
             int height = this.panel1.Height;
             for(int i = 0; i < game.coinsList.Count; i++)
             {
-                
+                double h = i / 23;
                 if (!game.coinsList[i])
                 {//human
-                    e.Graphics.DrawEllipse(penPink,  110*i, height / 2 - radius,
+                    e.Graphics.DrawEllipse(penPink,  70*(i-23*(int)h), 70 *(int)h+10,
                           radius + radius, radius + radius);
-                    e.Graphics.FillEllipse(brushPink, 110 * i, height / 2 - radius,
+                    e.Graphics.FillEllipse(brushPink, 70 * (i - 23 * (int)h), 70 * (int)h+10,
                               radius + radius, radius + radius);
                 }
                 else
                 {//comp
-                    e.Graphics.DrawEllipse(penBlue, 110 * i, height / 2 - radius,
+                    e.Graphics.DrawEllipse(penBlue, 70 * (i - 23 * (int)h), 70 * (int)h+10,
                          radius + radius, radius + radius);
-                    e.Graphics.FillEllipse(brushBlue, 110 * i, height / 2 - radius,
+                    e.Graphics.FillEllipse(brushBlue, 70 * (i - 23 * (int)h), 70 * (int)h+10,
                               radius + radius, radius + radius);
                 }
             }
             
         }
-        private string winning(WhoWins whoWins)
+        private string winning(WhoWinsCheck.WhoWins whoWins)
         {
-            if (whoWins != WhoWins.Noneone)
+            if (whoWins != WhoWinsCheck.WhoWins.Noneone)
             {
-                if (whoWins == WhoWins.Remis)
+                if (whoWins == WhoWinsCheck.WhoWins.Remis)
                 {
                     return "REMIS!";
                 }
-                else if (whoWins == WhoWins.Computer)
+                else if (whoWins == WhoWinsCheck.WhoWins.Computer)
                 {
                     return "Computer wins the game!";
                 }
@@ -81,7 +80,7 @@ namespace Van_der_Waerdena_game
         }
         private void put_coin_Click(object sender, EventArgs e)
         {
-            WhoWins whoWins = game.addCoin(false, (int)this.whare_put_coin.Value);
+            WhoWinsCheck.WhoWins whoWins = game.addCoin(false, (int)this.whare_put_coin.Value);
             this.panel1.Invalidate();
             this.panel1.Refresh();
             string label = winning(whoWins);
@@ -91,10 +90,14 @@ namespace Van_der_Waerdena_game
                 whowinsForms.Show();
                 return;
             }
-            this.whare_put_coin.Maximum++;
+            this.whare_put_coin.Maximum= game.getConisListCount();
             Thread.Sleep(1000);
-            if(computerStrategy=="Random")
+            if (computerStrategy == "Random")
                 whoWins = game.addCoin(true, ComputerRandomStrategy.MakeMove(game.getConisListCount()));
+            else if (computerStrategy == "K minus one")
+                whoWins = game.addCoin(true, ComputerKMinusOneStrategy.MakeMove(game.coinsList, game.maxNumberOfChips));
+            else
+                whoWins = game.addCoin(true, ComputerWinningStrategy.MakeMove(game.coinsList, game.maxNumberOfChips));
             this.panel1.Invalidate();
             this.panel1.Refresh();
             label = winning(whoWins);
@@ -104,7 +107,7 @@ namespace Van_der_Waerdena_game
                 whowinsForms.Show();
                 return;
             }
-            this.whare_put_coin.Maximum++;
+            this.whare_put_coin.Maximum= game.getConisListCount();
             
         }
     }

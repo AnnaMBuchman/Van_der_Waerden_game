@@ -82,6 +82,11 @@
             // numberChips
             // 
             this.numberChips.Location = new System.Drawing.Point(78, 98);
+            this.numberChips.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
             this.numberChips.Minimum = new decimal(new int[] {
             3,
             0,
@@ -110,6 +115,7 @@
             this.computerStrategy.FormattingEnabled = true;
             this.computerStrategy.Items.AddRange(new object[] {
             "Random",
+            "K minus one",
             "Winning"});
             this.computerStrategy.Location = new System.Drawing.Point(80, 284);
             this.computerStrategy.Name = "computerStrategy";
