@@ -86,11 +86,13 @@ namespace Van_der_Waerdena_game
             string label = winning(whoWins);
             if (label is not null)
             {
+                this.put_coin.Hide();
                 WhowinsForms whowinsForms = new WhowinsForms(label, startForm, this);
                 whowinsForms.Show();
                 return;
             }
             this.whare_put_coin.Maximum= game.getConisListCount();
+            this.put_coin.Hide();
             Thread.Sleep(1000);
             if (computerStrategy == "Random")
                 whoWins = game.addCoin(true, ComputerRandomStrategy.MakeMove(game.getConisListCount()));
@@ -106,6 +108,10 @@ namespace Van_der_Waerdena_game
                 WhowinsForms whowinsForms = new WhowinsForms(label, startForm,this);
                 whowinsForms.Show();
                 return;
+            }
+            else
+            {
+                this.put_coin.Show();
             }
             this.whare_put_coin.Maximum= game.getConisListCount();
             
